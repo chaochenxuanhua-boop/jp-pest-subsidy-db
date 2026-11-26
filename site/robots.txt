@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chaochenxuanhua-boop.github.io/jp-pest-subsidy-db/sitemap.xml

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F0ZLS15LNQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-F0ZLS15LNQ');
+    document.addEventListener('click', function(e) {
+      var el = e.target && e.target.closest ? e.target.closest('a, button') : null;
+      if (!el || typeof gtag !== 'function') return;
+      var label = (el.textContent || '').trim().slice(0, 60);
+      var href = el.getAttribute('href') || '';
+      if (el.id || (href && href.indexOf('http') === 0)) {
+        gtag('event', 'cta_engagement', {
+          element_id: el.id || 'link',
+          element_text: label,
+          link_url: href,
+          page_path: location.pathname
+        });
+      }
+    });
+  </script>
+  <title>害虫駆除の自治体補助金検索｜スズメバチ・シロアリ・害獣の相場比較</title>
+  <meta name="description" content="全国主要市区町村のスズメバチ駆除補助金・事前申請条件・防護服貸出・指定業者ルールを即時検索。適正な駆除相場と実質自己負担額を自動計算します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="brand-link">自治体補助金・空き家シミュレーター</a>
+      <nav class="nav-tabs" aria-label="機能切り替え">
+        <a href="./index.html" class="nav-tab active" aria-current="page">補助金・駆除相場</a>
+        <a href="./akiya.html" class="nav-tab" id="header-akiya-link">空き家10年損益</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-intro">
+      <h1>害虫駆除の自治体補助金検索</h1>
+      <p class="page-subtitle">市区町村を選ぶだけで、蜂・害獣の補助条件と適正駆除相場がわかります。</p>
+    </div>
+
+    <div class="two-col-layout">
+      <!-- Left Column: Municipality Search & Selector -->
+      <section class="panel-card" aria-labelledby="search-panel-heading">
+        <h2 class="panel-title" id="search-panel-heading">
+          <span>市区町村を選択</span>
+          <span id="filtered-count-label" class="count-status-text"></span>
+        </h2>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="pref-select">都道府県</label>
+            <select id="pref-select" class="select-input">
+              <option value="ALL">全国すべて</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="city-search-input">市区町村名・よみがな</label>
+            <input type="search" id="city-search-input" class="text-input" autocomplete="off" aria-describedby="city-search-hint">
+            <span id="city-search-hint" class="field-hint">例：世田谷区、せたがや、つくば、横浜</span>
+          </div>
+        </div>
+
+        <div class="chip-row" role="group" aria-label="制度種別で絞り込み">
+          <button type="button" class="filter-chip active" data-pattern="ALL">すべて</button>
+          <button type="button" class="filter-chip" data-pattern="subsidy_available">
+            <span class="status-dot" style="background-color:#15803D;"></span>補助金あり
+          </button>
+          <button type="button" class="filter-chip" data-pattern="city_designated_only">
+            <span class="status-dot" style="background-color:#B45309;"></span>指定・委託あり
+          </button>
+          <button type="button" class="filter-chip" data-pattern="suit_loan_only">
+            <span class="status-dot" style="background-color:#0077C2;"></span>防護服貸出
+          </button>
+          <button type="button" class="filter-chip" data-pattern="self_arranged_only">
+            <span class="status-dot" style="background-color:#64748B;"></span>自己手配
+          </button>
+        </div>
+
+        <div class="muni-list" id="muni-list" role="listbox" aria-label="市区町村一覧">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </section>
+
+      <!-- Right Column: Pest Condition + Subsidy & Cost Breakdown -->
+      <section class="panel-card" aria-labelledby="result-panel-heading">
+        <h2 class="panel-title" id="result-panel-heading">
+          <span>補助条件と実質負担の目安</span>
+        </h2>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="pest-type-select">対象の害虫・害獣</label>
+            <select id="pest-type-select" class="select-input">
+              <option value="suzumebachi">スズメバチ</option>
+              <option value="ashinagabachi">アシナガバチ・ミツバチ</option>
+              <option value="shiroari">シロアリ</option>
+              <option value="gaiju">ハクビシン・アライグマ・ネズミ</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="nest-loc-select">営巣・被害の場所</label>
+            <select id="nest-loc-select" class="select-input">
+              <option value="eaves">軒下・ベランダ等の低所（3m未満）</option>
+              <option value="attic_high" selected>屋根裏・壁内・2階以上の高所</option>
+              <option value="underfloor">床下・土中・狭小箇所</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="result-detail-container">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Below-the-Fold Reference Accordion -->
+    <section class="below-fold-section">
+      <details class="quiet-disclosure">
+        <summary>「500円〜」等の低価格広告の注意点と全国相場一覧を見る</summary>
+        <div class="disclosure-body">
+          <p style="margin:0 0 14px;">
+            国民生活センターには、Web広告で数百円〜数千円と表示しながら現地で「危険手当・高所作業費・巣の処置費」等を後出し加算し、<strong>8万〜15万円以上を請求するトラブル</strong>が報告されています。作業着手前に総額確定の見積書を提示する事業者を選んでください。
+          </p>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>対象種別</th>
+                  <th class="num">低所・軽度</th>
+                  <th class="num">高所・屋根裏</th>
+                  <th class="num">床下・広範囲封鎖</th>
+                  <th>自治体補助の傾向</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>スズメバチ</strong></td>
+                  <td class="num">13,000円〜25,000円</td>
+                  <td class="num"><strong>18,000円〜45,000円</strong></td>
+                  <td class="num">25,000円〜55,000円</td>
+                  <td>約3〜4割の自治体で補助・委託または防護服貸出あり</td>
+                </tr>
+                <tr>
+                  <td><strong>アシナガバチ</strong></td>
+                  <td class="num">8,800円〜16,000円</td>
+                  <td class="num">13,000円〜26,000円</td>
+                  <td class="num">16,000円〜32,000円</td>
+                  <td>大半の自治体で補助対象外（防護服貸出は利用可が多い）</td>
+                </tr>
+                <tr>
+                  <td><strong>シロアリ駆除（5年保証）</strong></td>
+                  <td class="num">65,000円〜110,000円</td>
+                  <td class="num">90,000円〜165,000円</td>
+                  <td class="num">120,000円〜240,000円</td>
+                  <td>住宅資産維持扱いのため公的補助は原則対象外</td>
+                </tr>
+                <tr>
+                  <td><strong>ハクビシン・アライグマ等</strong></td>
+                  <td class="num">35,000円〜75,000円</td>
+                  <td class="num">80,000円〜190,000円</td>
+                  <td class="num">120,000円〜280,000円</td>
+                  <td>箱わな貸出のみの自治体が多く、侵入口封鎖は自己負担</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <details class="quiet-disclosure" open style="margin-top:14px;">
+        <summary>都道府県・市区町村別の補助金・駆除相場ページ一覧</summary>
+        <div class="disclosure-body">
+          <!-- CITY_DIRECTORY_START -->
+          <div class="city-directory-grid">
+          <div class="city-dir-group"><div class="city-dir-region">北海道・東北（13自治体）</div><div class="city-dir-links"><a href="./cities/01100.html">北海道札幌市</a><a href="./cities/01202.html">北海道函館市</a><a href="./cities/01204.html">北海道旭川市</a><a href="./cities/01207.html">北海道帯広市</a><a href="./cities/02201.html">青森県青森市</a><a href="./cities/02203.html">青森県八戸市</a><a href="./cities/03201.html">岩手県盛岡市</a><a href="./cities/04100.html">宮城県仙台市</a><a href="./cities/05201.html">秋田県秋田市</a><a href="./cities/06201.html">山形県山形市</a><a href="./cities/07201.html">福島県福島市</a><a href="./cities/07203.html">福島県郡山市</a><a href="./cities/07204.html">福島県いわき市</a></div></div>
+          <div class="city-dir-group"><div class="city-dir-region">関東（28自治体）</div><div class="city-dir-links"><a href="./cities/08201.html">茨城県水戸市</a><a href="./cities/08220.html">茨城県つくば市</a><a href="./cities/09201.html">栃木県宇都宮市</a><a href="./cities/10201.html">群馬県前橋市</a><a href="./cities/10202.html">群馬県高崎市</a><a href="./cities/11100.html">埼玉県さいたま市</a><a href="./cities/11201.html">埼玉県川越市</a><a href="./cities/11203.html">埼玉県川口市</a><a href="./cities/11222.html">埼玉県越谷市</a><a href="./cities/12100.html">千葉県千葉市</a><a href="./cities/12204.html">千葉県船橋市</a><a href="./cities/12207.html">千葉県松戸市</a><a href="./cities/12217.html">千葉県柏市</a><a href="./cities/13103.html">東京都港区</a><a href="./cities/13104.html">東京都新宿区</a><a href="./cities/13111.html">東京都大田区</a><a href="./cities/13112.html">東京都世田谷区</a><a href="./cities/13115.html">東京都杉並区</a><a href="./cities/13120.html">東京都練馬区</a><a href="./cities/13121.html">東京都足立区</a><a href="./cities/13123.html">東京都江戸川区</a><a href="./cities/13201.html">東京都八王子市</a><a href="./cities/13209.html">東京都町田市</a><a href="./cities/14100.html">神奈川県横浜市</a><a href="./cities/14130.html">神奈川県川崎市</a><a href="./cities/14150.html">神奈川県相模原市</a><a href="./cities/14204.html">神奈川県鎌倉市</a><a href="./cities/14205.html">神奈川県藤沢市</a></div></div>
+          <div class="city-dir-group"><div class="city-dir-region">中部（13自治体）</div><div class="city-dir-links"><a href="./cities/15100.html">新潟県新潟市</a><a href="./cities/16201.html">富山県富山市</a><a href="./cities/17201.html">石川県金沢市</a><a href="./cities/18201.html">福井県福井市</a><a href="./cities/19201.html">山梨県甲府市</a><a href="./cities/20201.html">長野県長野市</a><a href="./cities/20202.html">長野県松本市</a><a href="./cities/21201.html">岐阜県岐阜市</a><a href="./cities/22100.html">静岡県静岡市</a><a href="./cities/22130.html">静岡県浜松市</a><a href="./cities/23100.html">愛知県名古屋市</a><a href="./cities/23201.html">愛知県豊橋市</a><a href="./cities/23211.html">愛知県豊田市</a></div></div>
+          <div class="city-dir-group"><div class="city-dir-region">近畿（12自治体）</div><div class="city-dir-links"><a href="./cities/24202.html">三重県四日市市</a><a href="./cities/25201.html">滋賀県大津市</a><a href="./cities/26100.html">京都府京都市</a><a href="./cities/27100.html">大阪府大阪市</a><a href="./cities/27140.html">大阪府堺市</a><a href="./cities/27203.html">大阪府豊中市</a><a href="./cities/27227.html">大阪府東大阪市</a><a href="./cities/28100.html">兵庫県神戸市</a><a href="./cities/28201.html">兵庫県姫路市</a><a href="./cities/28204.html">兵庫県西宮市</a><a href="./cities/29201.html">奈良県奈良市</a><a href="./cities/30201.html">和歌山県和歌山市</a></div></div>
+          <div class="city-dir-group"><div class="city-dir-region">中国・四国（7自治体）</div><div class="city-dir-links"><a href="./cities/33100.html">岡山県岡山市</a><a href="./cities/33202.html">岡山県倉敷市</a><a href="./cities/34100.html">広島県広島市</a><a href="./cities/35201.html">山口県下関市</a><a href="./cities/37201.html">香川県高松市</a><a href="./cities/38201.html">愛媛県松山市</a><a href="./cities/39201.html">高知県高知市</a></div></div>
+          <div class="city-dir-group"><div class="city-dir-region">九州・沖縄（8自治体）</div><div class="city-dir-links"><a href="./cities/40100.html">福岡県北九州市</a><a href="./cities/40130.html">福岡県福岡市</a><a href="./cities/42201.html">長崎県長崎市</a><a href="./cities/43100.html">熊本県熊本市</a><a href="./cities/44201.html">大分県大分市</a><a href="./cities/45201.html">宮崎県宮崎市</a><a href="./cities/46201.html">鹿児島県鹿児島市</a><a href="./cities/47201.html">沖縄県那覇市</a></div></div>
+          </div>
+          <!-- CITY_DIRECTORY_END -->
+        </div>
+      </details>
+
+      <div class="meta-stats-bar" id="hero-stats">
+        <div class="stats-inline-group">
+          <span class="stat-inline-item">収録自治体 <span class="stat-pill-value" id="stat-total-cities">--</span></span>
+          <span class="stat-inline-item">補助・委託あり <span class="stat-pill-value" id="stat-subsidy-cities">--</span></span>
+          <span class="stat-inline-item">防護服貸出 <span class="stat-pill-value" id="stat-suit-cities">--</span></span>
+          <span class="stat-inline-item">空き家解体補助併載 <span class="stat-pill-value" id="stat-akiya-cities">--</span></span>
+        </div>
+        <div id="dataset-meta-banner">データ検証済</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-note">
+        各市区町村の補助上限額・事前申請要件・防護服貸出ルールは公開要綱に基づき構造化していますが、年度途中の予算上限到達（例年9〜11月頃）等により終了する場合があります。依頼前に必ず記載の担当課へ最新の受付状況をご確認ください。民間見積もりリンクにはPR（アフィリエイト提携枠）が含まれます。
+      </p>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>

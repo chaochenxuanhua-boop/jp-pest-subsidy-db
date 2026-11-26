@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F0ZLS15LNQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-F0ZLS15LNQ');
+    document.addEventListener('click', function(e) {
+      var el = e.target && e.target.closest ? e.target.closest('a, button') : null;
+      if (!el || typeof gtag !== 'function') return;
+      var label = (el.textContent || '').trim().slice(0, 60);
+      var href = el.getAttribute('href') || '';
+      if (el.id || (href && href.indexOf('http') === 0)) {
+        gtag('event', 'cta_engagement', {
+          element_id: el.id || 'link',
+          element_text: label,
+          link_url: href,
+          page_path: location.pathname
+        });
+      }
+    });
+  </script>
+  <title>相続空き家の10年損益計算｜解体補助金・固定資産税・現況買取の比較</title>
+  <meta name="description" content="相続した空き家を更地解体した場合の住宅用地特例解除（固定資産税増額）、市区町村の除却補助金、管理不全空家リスク、現況買取の10年損益を比較します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="brand-link">自治体補助金・空き家シミュレーター</a>
+      <nav class="nav-tabs" aria-label="機能切り替え">
+        <a href="./index.html" class="nav-tab" id="header-pest-link">補助金・駆除相場</a>
+        <a href="./akiya.html" class="nav-tab active" aria-current="page">空き家10年損益</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-intro">
+      <h1>相続空き家の10年損益計算</h1>
+      <p class="page-subtitle">更地解体の固定資産税増額・自治体補助金・現況買取の10年収支を比較します。</p>
+    </div>
+
+    <div class="two-col-layout">
+      <!-- Left Column: Property & Municipality Inputs -->
+      <section class="panel-card" aria-labelledby="sim-input-heading">
+        <h2 class="panel-title" id="sim-input-heading">
+          <span>物件条件と自治体補助金</span>
+        </h2>
+
+        <div class="preset-btns" role="group" aria-label="モデル条件の自動入力">
+          <button type="button" class="preset-btn" data-preset="rural">地方郊外（土地600万）</button>
+          <button type="button" class="preset-btn" data-preset="regional">地方中核市（土地1,200万）</button>
+          <button type="button" class="preset-btn" data-preset="suburban">都市圏郊外（土地2,400万）</button>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="akiya-muni-select">所在地の市区町村（解体補助上限を自動反映）</label>
+          <select id="akiya-muni-select" class="select-input"></select>
+          <span class="field-hint" id="akiya-muni-note">選択した自治体の老朽危険空家除却補助上限が反映されます</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="land-eval-man">土地の固定資産税評価額（万円）</label>
+            <input type="number" id="land-eval-man" class="text-input" value="1200" min="50" max="30000" step="50">
+            <span class="field-hint">納税通知書記載の価格（実勢の約7割目安）</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="land-area-sqm">敷地面積（㎡）</label>
+            <input type="number" id="land-area-sqm" class="text-input" value="180" min="30" max="3000" step="10">
+            <span class="field-hint">200㎡以下は1/6特例、200㎡超は1/3特例</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="bldg-eval-man">建物の固定資産税評価額（万円）</label>
+            <input type="number" id="bldg-eval-man" class="text-input" value="150" min="0" max="5000" step="10">
+            <span class="field-hint">築30年超の木造は50〜200万円前後</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="bldg-tsubo">建物延床面積（坪）</label>
+            <input type="number" id="bldg-tsubo" class="text-input" value="30" min="10" max="150" step="2">
+            <span class="field-hint">一般4LDK戸建で約28〜35坪</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="bldg-struct">建物構造・道路条件</label>
+            <select id="bldg-struct" class="select-input">
+              <option value="wood_normal" selected>木造（重機進入可・坪5.0万）</option>
+              <option value="wood_narrow">木造・狭小道路（坪6.8万）</option>
+              <option value="steel">鉄骨造（坪6.5万）</option>
+              <option value="rc">RC造（坪8.5万）</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="upkeep-man">年間維持費（万円/年）</label>
+            <input type="number" id="upkeep-man" class="text-input" value="14" min="0" max="150" step="2">
+            <span class="field-hint">草刈り・火災保険・害虫予防・交通費</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="subsidy-override-man">想定する自治体解体補助金（万円）</label>
+            <input type="number" id="subsidy-override-man" class="text-input" value="50" min="0" max="300" step="5">
+            <span class="field-hint">対象外の場合は 0 に変更可能</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="kanri-risk-select">「管理不全空家」勧告リスク</label>
+            <select id="kanri-risk-select" class="select-input">
+              <option value="safe">適正管理を継続（特例維持）</option>
+              <option value="warn_y3" selected>3年目に管理不全空家勧告（特例解除）</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="city-plan-tax">都市計画税</label>
+            <select id="city-plan-tax" class="select-input">
+              <option value="0.003" selected>市街化区域（0.3%）</option>
+              <option value="0">課税なし（0%）</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="buyout-ratio">現況買取の想定水準（土地評価比 %）</label>
+            <input type="number" id="buyout-ratio" class="text-input" value="55" min="10" max="120" step="5">
+            <span class="field-hint">古家・残置物そのままの保守的目安</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Live 10-Year Simulation Result -->
+      <section class="panel-card" aria-labelledby="sim-output-heading">
+        <h2 class="panel-title" id="sim-output-heading">
+          <span>10年間の累計収支比較</span>
+        </h2>
+
+        <div id="tax-jump-banner" class="callout-box callout-danger">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div class="scenario-cards" id="scenario-cards-container">
+          <!-- 3 Scenario Cards populated by akiya.js -->
+        </div>
+
+        <div class="svg-chart-wrap">
+          <div class="chart-heading">1年目〜10年目の累計収支推移</div>
+          <div class="chart-legend">
+            <span><span class="legend-swatch" style="background-color:#15803D;"></span>現況のまま即買取</span>
+            <span><span class="legend-swatch" style="background-color:#B45309;"></span>空き家のまま保有</span>
+            <span><span class="legend-swatch" style="background-color:#DC2626;"></span>更地解体して保有</span>
+          </div>
+          <div id="cashflow-svg-holder"></div>
+        </div>
+
+        <div id="decision-advice-box" class="callout-box callout-info">
+          <!-- Decision recommendation -->
+        </div>
+
+        <div id="akiya-cta-container">
+          <!-- Populated from affiliate_config.json -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Below-the-Fold Yearly Table & Metadata -->
+    <section class="below-fold-section">
+      <details class="quiet-disclosure" open>
+        <summary>1年目〜10年目の年次キャッシュフロー比較表</summary>
+        <div class="disclosure-body">
+          <div class="table-scroll">
+            <table class="data-table" id="yearly-comparison-table">
+              <thead>
+                <tr>
+                  <th>経過年数</th>
+                  <th class="num">A：空き家維持</th>
+                  <th class="num">B：補助金解体＋更地保有</th>
+                  <th class="num">C：現況即買取</th>
+                  <th class="num">CとBの差額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Populated by akiya.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <div class="meta-stats-bar">
+        <span>地方税法第349条の3の2（住宅用地特例 1/6・1/3）および2023年改正空家法（管理不全空家の特例解除）準拠</span>
+        <span id="akiya-header-meta">自治体別・除却補助データ連動</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-note">
+        固定資産税（1.4%）・都市計画税（上限0.3%）は住宅用地特例および非住宅用地の負担調整水準（評価額×70%）で試算しています。実際の税額・補助金採択可否・買取査定額は個別物件の条件により異なるため、最終判断時は自治体課税課および査定会社の見積もりをご確認ください。
+      </p>
+    </div>
+  </footer>
+
+  <script src="./akiya.js"></script>
+</body>
+</html>
